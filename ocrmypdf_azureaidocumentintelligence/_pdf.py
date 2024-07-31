@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2023 James R. Barlow
 # SPDX-License-Identifier: MIT
 
-"""Convert EasyOCR results to a PDF with text annotations (no images)."""
+"""Convert Azure AI Document Intelligence results to a PDF with text annotations (no images)."""
 
 from __future__ import annotations
 
@@ -21,11 +21,15 @@ from pikepdf import (
 )
 from PIL import Image
 
-from ocrmypdf_easyocr._easyocr import EasyOCRResult
+from ocrmypdf_azureaidocumentintelligence._azureaidocumentintelligence import (
+    AzureOCRResult,
+)
 
 log = logging.getLogger(__name__)
 TEXT_POSITION_DEBUG = False
-GLYPHLESS_FONT = importlib.resources.read_binary("ocrmypdf_easyocr", "pdf.ttf")
+GLYPHLESS_FONT = (
+    importlib.resources.files("ocrmypdf_azureaidocumentintelligence") / "pdf.ttf"
+).read_bytes()
 CHAR_ASPECT = 2
 
 
@@ -207,7 +211,7 @@ class ContentStreamBuilder:
 
 
 def generate_text_content_stream(
-    results: Iterable[EasyOCRResult],
+    results: Iterable[AzureOCRResult],
     scale: tuple[float, float],
     height: int,
     boxes=False,
@@ -215,7 +219,7 @@ def generate_text_content_stream(
     """Generate a content stream for the described by results.
 
     Args:
-        results (Iterable[EasyOCRResult]): Results of OCR.
+        results (Iterable[AzureOCRResult]): Results of OCR.
         scale (tuple[float, float]): Scale of the image.
         height (int): Height of the image.
 
@@ -269,21 +273,21 @@ def generate_text_content_stream(
     return cs.build()
 
 
-def easyocr_to_pikepdf(
+def azure_ai_document_intelligence_to_pikepdf(
     image_filename: Path,
     image_scale: float,
-    results: Iterable[EasyOCRResult],
+    results: Iterable[AzureOCRResult],
     output_pdf: Path,
     boxes: bool,
 ):
-    """Convert EasyOCR results to a PDF with text annotations (no images).
+    """Convert AzureOCR results to a PDF with text annotations (no images).
 
     Args:
         image_filename: Path to the image file that was OCR'd.
         image_scale: Scale factor applied to the OCR image. 1.0 means the
             image is at the scale implied by its DPI. 2.0 means the image
             is twice as large as implied by its DPI.
-        results: List of EasyOCRResult objects.
+        results: List of AzureOCRResult objects.
         output_pdf: Path to the output PDF file that this will function will
             create.
 

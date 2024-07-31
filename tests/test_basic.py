@@ -2,15 +2,10 @@
 # SPDX-License-Identifier: MIT
 
 import ocrmypdf
-import pikepdf
+import ocrmypdf_azureaidocumentintelligence  # noqa: F401
 import pytest
 
-import ocrmypdf_easyocr
 
-
-def test_easyocr(resources, outpdf):
-    ocrmypdf.ocr(resources / "jbig2.pdf", outpdf)
-    assert outpdf.exists()
-
-    with pikepdf.open(outpdf) as pdf:
-        assert "EasyOCR" in str(pdf.docinfo["/Creator"])
+def test_azureaidocumentintelligence(resources, outpdf):
+    with pytest.raises(ValueError):
+        ocrmypdf.ocr(resources / "jbig2.pdf", outpdf, pdf_renderer="sandwich")

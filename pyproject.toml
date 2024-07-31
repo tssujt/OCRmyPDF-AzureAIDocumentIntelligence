@@ -1,15 +1,14 @@
 [project]
-name = "ocrmypdf-easyocr"
+name = "ocrmypdf-azureaidocumentintelligence"
 version = "0.1.0"
-description = "Plugin to run OCRmyPDF with the EasyOCR engine"
-authors = [{ name = "James R. Barlow", email = "james@purplerock.ca" }]
+description = "Plugin to run OCRmyPDF with the Azure AI Document Intelligence engine"
+authors = [{ name = "tssujt", email = "github@tssujt.xyz" }]
 dependencies = [
-    "easyocr>=1.7.0",
-    "ocrmypdf>=14.2.1",
-    "Pillow>=10.0.1",
-    "opencv-python-headless>=4.8.0.74",
+    "azure-ai-documentintelligence>=1.0.0b3",
     "numpy>=1.20",
-    "torch",
+    "ocrmypdf>=14.2.1",
+    "opencv-python-headless>=4.8.0.74",
+    "Pillow>=10.0.1",
 ]
 requires-python = ">=3.10"
 readme = "README.md"
@@ -18,17 +17,15 @@ license = { text = "MIT" }
 [project.entry-points]
 
 [project.entry-points.ocrmypdf]
-ocrmypdf = "ocrmypdf_easyocr"
+ocrmypdf = "ocrmypdf_azureaidocumentintelligence"
 
 [project.optional-dependencies]
 dev = ["ruff>=0.0.272"]
-test = [
-  "pytest>=6.2.5",
-]
+test = ["pytest>=6.2.5"]
 
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.package-data]
-ocrmypdf_easyocr = ["pdf.ttf", "py.typed"]
+ocrmypdf_azureaidocumentintelligence = ["pdf.ttf", "py.typed"]

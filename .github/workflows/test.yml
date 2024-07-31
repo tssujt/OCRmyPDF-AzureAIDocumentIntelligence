@@ -1,4 +1,4 @@
-name: Test EasyOCR
+name: Test
 
 on:
   push:
@@ -25,6 +25,9 @@ jobs:
             tesseract5: true
           - os: ubuntu-latest
             python: "3.11"
+            tesseract5: true
+          - os: ubuntu-latest
+            python: "3.12"
             tesseract5: true
     env:
       OS: ${{ matrix.os }}
